@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Cuisine = () => {
   const [cuisine, setCuisine] = useState([]);
   let params = useParams();
-  const navigate = useNavigate();
   const getCuisine = async (name) => {
     const api = await fetch(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOON_API_KEY}&cuisine=${name}`
@@ -25,14 +24,11 @@ const Cuisine = () => {
       {cuisine.length > 0 &&
         cuisine.map((recipe) => {
           return (
-            <Card
-              key={recipe.id}
-              onClick={() => {
-                navigate(`/recipe/${recipe.id}`);
-              }}
-            >
-              <img src={recipe.image} alt={recipe.title} />
-              <h4>{recipe.title}</h4>
+            <Card key={recipe.id}>
+              <Link to={`/recipe/${recipe.id}`}>
+                <img src={recipe.image} alt={recipe.title} />
+                <h4>{recipe.title}</h4>
+              </Link>
             </Card>
           );
         })}
@@ -50,7 +46,6 @@ const Card = styled.div`
   img {
     width: 100%;
     border-radius: 2rem;
-    cursor: pointer;
   }
 
   a {

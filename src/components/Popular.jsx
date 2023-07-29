@@ -4,11 +4,10 @@ import "@splidejs/react-splide/css";
 import { Gradient } from "./styled/styled";
 import { Card } from "./styled/styled";
 import { Wrapper } from "./styled/styled";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Popular = () => {
   const [popular, setPopular] = useState([]);
-  const navigate = useNavigate();
 
   const getPopular = async () => {
     const getLocal = JSON.parse(localStorage.getItem("popularRecipes"));
@@ -47,14 +46,12 @@ const Popular = () => {
         {popular.map((recipe) => {
           return (
             <SplideSlide key={recipe.id}>
-              <Card
-                onClick={() => {
-                  navigate(`/recipe/${recipe.id}`);
-                }}
-              >
-                <p>{recipe.title}</p>
-                <img src={recipe.image} alt={recipe.title} />
-                <Gradient />
+              <Card>
+                <Link to={`/recipe/${recipe.id}`}>
+                  <p>{recipe.title}</p>
+                  <img src={recipe.image} alt={recipe.title} />
+                  <Gradient />
+                </Link>
               </Card>
             </SplideSlide>
           );
