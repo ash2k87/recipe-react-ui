@@ -7,9 +7,7 @@ const Cuisine = () => {
   const [cuisine, setCuisine] = useState([]);
   let params = useParams();
   const getCuisine = async (name) => {
-    const api = await fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOON_API_KEY}&cuisine=${name}`
-    );
+    const api = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOON_API_KEY}&cuisine=${name}`);
     const data = await api.json();
     setCuisine(data.results);
   };
@@ -20,7 +18,7 @@ const Cuisine = () => {
   }, [params.category]);
 
   return (
-    <Grid>
+    <Grid animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
       {cuisine.length > 0 &&
         cuisine.map((recipe) => {
           return (
@@ -36,7 +34,7 @@ const Cuisine = () => {
   );
 };
 
-const Grid = styled.div`
+const Grid = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(4, minmax(5rem, 1fr));
   grid-gap: 3rem;
